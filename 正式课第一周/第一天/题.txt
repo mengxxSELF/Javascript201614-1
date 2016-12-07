@@ -63,7 +63,7 @@ b();
 
 面试题
 1.关于内存释放的面试题
-function fn() {
+    function fn() {
         var i = 10;
         return function (n) {
             console.log(n + (++i));

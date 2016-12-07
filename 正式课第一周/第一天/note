@@ -44,6 +44,7 @@ git config --global user.email "你的github邮箱"
     3）代码写在里面和外面是有区别的；
 2.什么是预解释？
    在当前作用域下，在JS代码执行之前，浏览器会对带var和带function的，进行提前声明或定义；
+
 3.关于预解释：带var和带function不同：
  1）带var：只声明不定义；var a;告诉浏览器有个变量叫a，关于a的内容并不知道；
  2）带function:声明+定义； var fn=xxff00;
