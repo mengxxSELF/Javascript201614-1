@@ -9,6 +9,7 @@
     })();
     alert(f());
     alert(g());
+
 2.自执行函数的预解释
 (function f(){
     function f(){ return 1; }
