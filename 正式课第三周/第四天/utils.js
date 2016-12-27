@@ -24,7 +24,7 @@ var utils=(function(){
             for(var i=0; i<args.length; i++){
                 ary.push(args[i]);
             }
-            return ary;
+                return ary;
         }
     }
     function jsonParse(jsonStr){

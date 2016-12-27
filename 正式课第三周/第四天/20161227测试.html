@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>瀑布流+延迟加载+回到顶部</title>
+    <style>
+        *{margin:0;padding:0;list-style: none}
+        div{width:1200px;margin:0 auto}
+        div ul{width:180px;margin:0 10px;float: left}
+        div ul li{width:100%;margin-bottom:10px;background: url("img2/default.gif") no-repeat center #e1e1e1}
+        div ul li img{width:100%}
+        a{
+            width:100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: lightcyan;
+            font:bold 18px/100px "微软雅黑";
+            position: fixed;
+            right:30px;
+            bottom:30px;
+            text-align:center;
+            text-decoration: none;
+        }
+    </style>
+    <script src="utils.js"></script>
+</head>
+<body>
+<div id="box">
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+</div>
+<a href="javascript:void(0)" id="btn">回到顶部</a>
+<script>
+    var ary = [
+        {"imgsrc" :"img2/1.jpg"},
+        {"imgsrc" :"img2/2.jpg"},
+        {"imgsrc" :"img2/3.jpg"},
+        {"imgsrc" :"img2/4.jpg"},
+        {"imgsrc" :"img2/5.jpg"},
+        {"imgsrc" :"img2/6.jpg"},
+        {"imgsrc" :"img2/7.jpg"},
+        {"imgsrc" :"img2/8.jpg"},
+        {"imgsrc" :"img2/9.jpg"},
+        {"imgsrc" :"img2/10.jpg"}
+    ];
+    var aUl = document.getElementsByTagName('ul');
+    var aImg = document.getElementsByTagName('img');
+    var oBtn = document.getElementById('btn');
+    var timer = null;
+    var f = false;
+    function cLi(){
+        var oLi = document.createElement('li');
+        oLi.style.height = utils.rnd(80,120)+'px';
+        oLi.innerHTML="<img realImg="+ary[utils.rnd(0,9)].imgsrc+">";
+        return oLi;
+    }
+    function cMultiLi(){
+        for(var i=0;i<50;i++){
+            var oLi = cLi();
+            var ary = utils.makeArray(aUl);
+            ary.sort(function(a,b){
+                return a.offsetHeight - b.offsetHeight;
+            });
+            ary[0].appendChild(oLi);
+        }
+    }
+    function showImg(){
+        for(var i=0;i<aImg.length;i++){
+            var img = aImg[i];
+            var curTop = utils.win('scrollTop') +　utils.win('clientHeight');
+            var imgPos = utils.offset(img).top + img.offsetHeight;
+            if(imgPos <= curTop){
+                lazyImg(img)
+            }
+        }
+    }
+    function lazyImg(img){
+        if(img.loaded)return;
+        var tmpImg = new Image;
+        tmpImg.src = img.getAttribute('realImg');
+        tmpImg.onload = function () {
+                img.src = this.src;
+            tmpImg = null;
+            img.loaded = true;
+            img.parentNode.style.height = img.offsetHeight +'px';
+        }
+    }
+    cMultiLi();
+    showImg();
+    window.onscroll = function () {
+        if(utils.win('scrollTop') + utils.win('clientHeight')+10 > utils.win('scrollHeight')){
+            cMultiLi();
+        }
+        showImg();
+        if( utils.win('scrollTop') > utils.win('clientHeight')){
+           oBtn.style.display= 'block';
+        }else{
+            oBtn.style.display='none';
+        }
+        if(f)clearInterval(timer);
+        f = true;
+    }
+    oBtn.onclick = function () {
+        var dis = utils.win('scrollTop');
+        var time = 1000;
+        var interval = 50;
+        var step = dis/time*interval;
+        timer = setInterval(function(){
+            var curTop = utils.win('scrollTop');
+            curTop -= step;
+            if(curTop <= 0){
+                curTop = 0;
+                clearInterval(timer);
+            }
+            utils.win('scrollTop',curTop)
+            f = false;
+        },interval)
+    }
+</script>
+</body>
+</html>
