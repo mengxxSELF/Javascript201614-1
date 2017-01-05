@@ -1,6 +1,8 @@
 1.DOM0级事件和DOM2级事件的区别：
-1）DOM0级事件是元素身上的私有属性 2）DOM0级事件，当给同一个元素，同一个行为上绑定多个不同的方法的时候，后面的方法会“覆盖”前面的方法；
-1）DOM2级事件是元素身上的公有属性，存放在元素所属的eventTarget这个类的原型上；2）DOM2级事件，可以给同一个元素的同一个行为上绑定多个不同的方法；
+1）DOM0级事件是元素身上的私有属性
+ 2）DOM0级事件，当给同一个元素，同一个行为上绑定多个不同的方法的时候，后面的方法会“覆盖”前面的方法；
+1）DOM2级事件是元素身上的公有属性，存放在元素所属的eventTarget这个类的原型上；
+2）DOM2级事件，可以给同一个元素的同一个行为上绑定多个不同的方法；
 2.什么是事件？
 1）鼠标事件MouseEvent
 onclick  ondbclick onmouseover onmouseout onmouseenter onmouseleave oncontextmenu ...
